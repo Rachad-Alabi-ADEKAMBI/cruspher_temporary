@@ -1,0 +1,234 @@
+$yellow: #FFCA28;
+$purple: #7E57C2;
+$white: white;
+
+@mixin flex($flex-direction: row){
+    display: flex;
+    flex-direction: $flex-direction;
+    justify-content: start;
+    flex-wrap: wrap;
+}
+
+html, body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #1E1E1F;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1em;
+}
+
+ul li{
+    list-style: none;
+}
+
+a{
+    text-decoration: none;
+}
+
+a:hover{
+    color: $purple;
+}
+
+.header{
+    @include flex();
+    background-color: #121212;
+    padding: 10px;;
+    height: 80px;
+    margin: auto;
+
+    &__logo{
+        margin: auto 0;
+
+        img{
+
+        }
+    }
+
+    ul{
+        margin: auto 0 auto auto;
+        li{
+            display: inline;
+            margin: 5px;
+
+            a{
+                color: $white;
+            }
+
+            a:hover{
+                color: $purple;
+            }
+        }
+    }
+}
+
+.main{
+    display: block;
+    text-align: center;
+
+    &__content{
+        .search{
+            margin: auto 15px;
+            @include flex(column);
+            text-align: left;
+
+            h2{
+                margin: 5px auto 5px 5px;
+            }
+
+            &__box{
+                margin: 5px auto auto  5px;
+                @include flex();
+
+                .input{
+                    height: 50px;
+                    width: 250px;
+                    font-size: 1.3em;
+                    padding-left: 10px;
+                    border-radius: 15px;
+                }
+
+                .close{
+                    font-size: 2.5em;
+                    margin: auto 5px;
+                    color: $yellow;
+                  //  font-weight: bold;
+                    cursor: pointer;
+                }
+
+                .close:hover{
+                    color: $purple;
+                }
+            }
+
+        }
+
+        .boxes{
+            @include flex();
+            margin: 20px auto;
+
+            h2{
+                margin: auto;
+            }
+
+            .box{
+                width: 90%;
+                margin: 15px auto;
+                @include flex();
+                color: $white;
+
+
+                &__btn{
+                    font-size: 2.4em;
+                    margin: auto 5px;
+                    cursor: pointer;
+                    width: 60px;
+                    height: 60px;
+                    border-radius: 30px;
+                    text-align: center;
+                    color: $white;
+                    background-color: #131313;
+                    display: table;
+
+                    p{
+                        display: table-cell;
+                        vertical-align: middle;
+                        font-weight: 400;
+                    }
+                }
+
+                &__content{
+                    width: 90%;
+                    margin: auto 5px auto auto;
+                    @include flex(column);
+                    border: 1px solid rgb(107, 102, 102);
+                    border-radius: 15px;
+                    padding-bottom: 10px;
+                    background-color: #131313;
+
+                    &__top{
+                        padding:10px;
+                        @include flex();
+                        justify-content: space-between;
+
+                        p{
+                            color: $white;
+                            font-weight: 400;
+                            text-align: left;
+                            line-height: 1.3em;
+                        }
+
+                        img{
+                            width: 90px;
+                            height: auto;
+                            border-radius: 90px;
+                        }
+
+                    }
+
+                    &__bottom{
+                        @include flex();
+                        padding: 10px;
+                        text-align: center;
+                        .flag{
+                            text-align: left;
+                            flex: 1;
+
+                            h3{
+                                font-size: 1.7em;
+                            }
+
+                            img{
+                                border-radius: 90px;
+                                height: auto;
+                                margin: auto 5px;
+                            }
+                        }
+
+                        .arrow{
+                            flex: 1;
+                            margin: auto;
+                            img{
+                                width: 120px;
+                                height: auto;
+                            }
+                        }
+
+                        .clubs{
+                            display: block;
+                            flex: 1;
+
+                           .list{
+                            @include flex();
+
+                            .club{
+                                flex: 1;
+                                img{
+                                    width: 90px;
+                                    border-radius: 60px;
+                                    height: auto;
+                                    margin: auto;
+                                }
+                            }
+                           }
+                        }
+                    }
+
+                }
+
+
+            }
+        }
+    }
+}
+
+h1{
+    color: #E7E7EF;
+    font-size: 2.6em;
+}
+
+h2{
+    color: #E7E7EF;
+    font-size: 2em;
+}

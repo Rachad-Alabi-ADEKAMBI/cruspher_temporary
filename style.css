@@ -1,0 +1,211 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #1E1E1F;
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+  font-size: 1em;
+}
+
+ul li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  color: #7E57C2;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  flex-wrap: wrap;
+  background-color: #121212;
+  padding: 10px;
+  height: 80px;
+  margin: auto;
+}
+.header__logo {
+  margin: auto 0;
+}
+.header ul {
+  margin: auto 0 auto auto;
+}
+.header ul li {
+  display: inline;
+  margin: 5px;
+}
+.header ul li a {
+  color: white;
+}
+.header ul li a:hover {
+  color: #7E57C2;
+}
+
+.main {
+  display: block;
+  text-align: center;
+}
+.main__content .search {
+  margin: auto 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  flex-wrap: wrap;
+  text-align: left;
+}
+.main__content .search h2 {
+  margin: 5px auto 5px 5px;
+}
+.main__content .search__box {
+  margin: 5px auto auto 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  flex-wrap: wrap;
+}
+.main__content .search__box .input {
+  height: 50px;
+  width: 250px;
+  font-size: 1.3em;
+  padding-left: 10px;
+  border-radius: 15px;
+}
+.main__content .search__box .close {
+  font-size: 2.5em;
+  margin: auto 5px;
+  color: #FFCA28;
+  cursor: pointer;
+}
+.main__content .search__box .close:hover {
+  color: #7E57C2;
+}
+.main__content .boxes {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  flex-wrap: wrap;
+  margin: 20px auto;
+}
+.main__content .boxes h2 {
+  margin: auto;
+}
+.main__content .boxes .box {
+  width: 90%;
+  margin: 15px auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  flex-wrap: wrap;
+  color: white;
+}
+.main__content .boxes .box__btn {
+  font-size: 2.4em;
+  margin: auto 5px;
+  cursor: pointer;
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  text-align: center;
+  color: white;
+  background-color: #131313;
+  display: table;
+}
+.main__content .boxes .box__btn p {
+  display: table-cell;
+  vertical-align: middle;
+  font-weight: 400;
+}
+.main__content .boxes .box__content {
+  width: 90%;
+  margin: auto 5px auto auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  flex-wrap: wrap;
+  border: 1px solid rgb(107, 102, 102);
+  border-radius: 15px;
+  padding-bottom: 10px;
+  background-color: #131313;
+}
+.main__content .boxes .box__content__top {
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.main__content .boxes .box__content__top p {
+  color: white;
+  font-weight: 400;
+  text-align: left;
+  line-height: 1.3em;
+}
+.main__content .boxes .box__content__top img {
+  width: 90px;
+  height: auto;
+  border-radius: 90px;
+}
+.main__content .boxes .box__content__bottom {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  flex-wrap: wrap;
+  padding: 10px;
+  text-align: center;
+}
+.main__content .boxes .box__content__bottom .flag {
+  text-align: left;
+  flex: 1;
+}
+.main__content .boxes .box__content__bottom .flag h3 {
+  font-size: 1.7em;
+}
+.main__content .boxes .box__content__bottom .flag img {
+  border-radius: 90px;
+  height: auto;
+  margin: auto 5px;
+}
+.main__content .boxes .box__content__bottom .arrow {
+  flex: 1;
+  margin: auto;
+}
+.main__content .boxes .box__content__bottom .arrow img {
+  width: 120px;
+  height: auto;
+}
+.main__content .boxes .box__content__bottom .clubs {
+  display: block;
+  flex: 1;
+}
+.main__content .boxes .box__content__bottom .clubs .list {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  flex-wrap: wrap;
+}
+.main__content .boxes .box__content__bottom .clubs .list .club {
+  flex: 1;
+}
+.main__content .boxes .box__content__bottom .clubs .list .club img {
+  width: 90px;
+  border-radius: 60px;
+  height: auto;
+  margin: auto;
+}
+
+h1 {
+  color: #E7E7EF;
+  font-size: 2.6em;
+}
+
+h2 {
+  color: #E7E7EF;
+  font-size: 2em;
+}/*# sourceMappingURL=style.css.map */
