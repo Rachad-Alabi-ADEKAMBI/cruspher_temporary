@@ -34,26 +34,78 @@
                     <h2>
                         Search
                     </h2>
-                    <div class="search__box">
-                        <input type="search" class='input' placeholder='type a name'>
-                        <div class="close">X</div>
-                    </div>
 
                     <div class="search__box">
                         <input type="search" class='input' placeholder='type a name' v-model="searchQuery">
-                        <div class="close">X</div>
+                        <div class="close" @click="closeResults">X</div>
                     </div>
 
-                    <div class="item" v-for="detail in filteredDetailsList" :key="detail.id"
-                        style="color: white; font-weight: bold">
-                        {{ detail.name }}
-                    </div>
+
                 </div>
-                <div class="boxe">
+                <div class="boxes" v-if="showAll">
                     <div class="item" v-for="detail in detailsList" :key="detail.id"
                         style="color: white; font-weight: bold">
                         {{ detail.name }}
                     </div>
+
+                    <div class="box" v-for='detail in detailsList' :key='detail.id'>
+                        <div class="box__btn">
+                            <p @click='displayMore()' v-if='showMoreBtn'>
+                                +
+                            </p>
+
+                            <p @click='closeMore()' v-if='showCloseBtn'>
+                                -
+                            </p>
+                        </div>
+
+
+                        <div class="box__content">
+                            <div class="box__content__top">
+                                <p>{{ detail.firstname }} {{ detail.name }} <br>
+                                    Nationality: {{ detail.nationality }} <br>
+                                    Age: {{ detail.age }}
+                                </p>
+
+                                <img :src="detail.photo" alt="">
+                            </div>
+
+                            <div class="box__content__bottom" v-if="showMore">
+                                <div class="flag">
+                                    <h2>Current club</h2>
+                                    <img :src="detail.team.logo" alt="">
+                                </div>
+
+                                <div class="clubs">
+                                    <h2>
+                                        Old clubs
+                                    </h2>
+                                    <div class="list">
+                                        <div v-for="club in detail.career" :key="club.team.id" class="club">
+                                            <img :src="club.team.logo" alt="">
+                                            <p>
+                                                Start date: {{ formatDate(club.start) }} <br>
+                                                End date: {{ formatDate(club.end) || 'Present' }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="boxe" v-if='showResults'>
+
+                    <h2>Seach results</h2>
+                    <div class="item" v-if="filteredDetailsList.length > 0" v-for="detail in filteredDetailsList"
+                        :key="detail.id" style="color: white; font-weight: bold">
+                        {{ detail.name }}
+                    </div>
+
                 </div>
             </div>
         </main>
@@ -81,6 +133,8 @@
                 idList: [30, 50, 10],
                 detailsList: [],
                 searchQuery: '',
+                showAll: true,
+                showResults: false
             };
         },
 
@@ -93,6 +147,12 @@
                 return this.detailsList.filter(detail =>
                     detail.name.toLowerCase().includes(this.searchQuery.toLowerCase())
                 );
+            },
+        },
+
+        watch: {
+            searchQuery() {
+                this.searchQueryAction();
             },
         },
 
@@ -152,6 +212,15 @@
                 }
 
                 return 'Present';
+            },
+            searchQueryAction() {
+                this.showAll = false;
+                this.showResults = true;
+                console.log('Search query changed:', this.searchQuery);
+            },
+            closeResults() {
+                this.showAll = true;
+                this.showResults = false;
             }
         },
     }).mount('#app');
