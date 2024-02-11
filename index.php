@@ -67,13 +67,13 @@
                                     Age: {{ detail.age }}
                                 </p>
 
-                                <img :src="detail.photo" alt="">
+
                             </div>
 
                             <div class="box__content__bottom" v-if="showMore">
                                 <div class="flag">
                                     <h2>Current club</h2>
-                                    <img :src="detail.team.logo" alt="">
+                                    <img v-if="detail.team" :src="club.team.logo" alt="">
                                 </div>
 
                                 <div class="clubs">
@@ -178,9 +178,10 @@
                         }
 
                         const result = await response.json();
+                        console.log(result);
                         let detail = {
                             id: list[i],
-                            name: result.response[0].firstname,
+                            name: result.response[0].firstname + ' ' + result.response[1]
                         };
                         details.push(detail);
                     } catch (error) {
