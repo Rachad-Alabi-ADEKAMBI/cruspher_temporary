@@ -9,6 +9,15 @@ $white: white;
     flex-wrap: wrap;
 }
 
+.green{
+    color: green;
+    font-weight: bold;
+}
+
+.red{
+    color: red;
+    font-weight: bold;
+}
 html, body{
     margin: 0;
     padding: 0;
@@ -149,18 +158,26 @@ a:hover{
 
                     &__top{
                         padding:10px;
-                        @include flex();
-                        justify-content: space-between;
+                        @include flex(column);
+                        text-align: center;
 
                         p{
                             color: $white;
-                            font-weight: 400;
+                            font-weight: 500;
                             text-align: left;
                             line-height: 1.3em;
+                            margin: auto;
+
+                            span{
+                                color: $yellow;
+                                font-weight: 800;
+                                font-size: larger;
+                            }
                         }
 
                         img{
                             width: 90px;
+                            margin: auto;
                             height: auto;
                             border-radius: 90px;
                         }
@@ -205,13 +222,58 @@ a:hover{
                             .club{
                                 flex: 1;
                                 img{
-                                    width: 90px;
-                                    border-radius: 60px;
+                                    width: 70px;
+                                    border-radius: 40px;
                                     height: auto;
-                                    margin: auto;
+                                    margin: 20px;
                                 }
                             }
                            }
+                        }
+                        /*
+                        .tab{
+                            width: 100%;
+
+                            .table{
+                                width: 100%;
+
+                                th{
+                                    background-color: #F2F2F2;
+                                    color: black;
+                                }
+                            }
+                        }
+                        */
+
+                        .tab{
+                            width: 100%;
+
+                            .table{
+                                width: 100%;
+
+                                .thead{
+                                    background-color:#f2f2f2;
+                                    color: black;
+                                    font-weight: bold;
+
+                                    tr{
+                                        height: 40px;
+                                    }
+                                }
+
+                                .tbody{
+                                    tr{
+                                        height: 40px;
+
+                                        td{
+                                            img{
+                                                width: 70px;
+                                                border-radius: 40px;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
 

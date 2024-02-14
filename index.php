@@ -7,6 +7,9 @@
     <title>Cruspher - Coachs</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous">
+    </script>
 </head>
 
 <body>
@@ -43,37 +46,31 @@
 
                 </div>
                 <div class="boxes" v-if="showAll">
-                    <div class="item" v-for="detail in detailsList" :key="detail.id"
-                        style="color: white; font-weight: bold">
-                        {{ detail.name }}
-                    </div>
-
                     <div class="box" v-for='detail in detailsList' :key='detail.id'>
                         <div class="box__btn">
-                            <p @click='displayMore()' v-if='showMoreBtn'>
+                            <p @click="displayMore(detail)" v-if="!detail.showMore">
                                 +
                             </p>
-
-                            <p @click='closeMore()' v-if='showCloseBtn'>
+                            <p @click="closeMore(detail)" v-if="detail.showMore">
                                 -
                             </p>
                         </div>
 
-
                         <div class="box__content">
                             <div class="box__content__top">
-                                <p>{{ detail.firstname }} {{ detail.name }} <br>
-                                    Nationality: {{ detail.nationality }} <br>
-                                    Age: {{ detail.age }}
+                                <img :src="detail.photo" alt=""> <br>
+                                <p>Name: <span>{{ detail.firstname }} {{ detail.name }}</span> <br>
+                                    Nationality: <span>{{ detail.nationality }}</span> <br>
+                                    Age: <span>{{ detail.age }}</span>
                                 </p>
 
 
                             </div>
 
-                            <div class="box__content__bottom" v-if="showMore">
+                            <div class="box__content__bottom" v-if="detail.showMore">
                                 <div class="flag">
                                     <h2>Current club</h2>
-                                    <img v-if="detail.team" :src="club.team.logo" alt="">
+                                    <img :src="detail.club" alt="">
                                 </div>
 
                                 <div class="clubs">
@@ -84,8 +81,8 @@
                                         <div v-for="club in detail.career" :key="club.team.id" class="club">
                                             <img :src="club.team.logo" alt="">
                                             <p>
-                                                Start date: {{ formatDate(club.start) }} <br>
-                                                End date: {{ formatDate(club.end) || 'Present' }}
+                                                <span class="green">{{ formatDate(club.start) }}</span> <br>
+                                                <strong class="red">{{ formatDate(club.end) || 'Present' }}</strong>
                                             </p>
                                         </div>
                                     </div>
@@ -98,14 +95,62 @@
                     </div>
                 </div>
 
-                <div class="boxe" v-if='showResults'>
+                <div class="boxes" v-if="showResults">
+                    <h2>Search results</h2> <br>
 
-                    <h2>Seach results</h2>
-                    <div class="item" v-if="filteredDetailsList.length > 0" v-for="detail in filteredDetailsList"
+                    <div class="box" v-if="filteredDetailsList.length > 0" v-for="detail in filteredDetailsList"
                         :key="detail.id" style="color: white; font-weight: bold">
-                        {{ detail.name }}
-                    </div>
+                        <div class="box__btn">
+                            <p @click="displayMore(detail)" v-if="!detail.showMore">
+                                +
+                            </p>
+                            <p @click="closeMore(detail)" v-if="detail.showMore">
+                                -
+                            </p>
+                        </div>
 
+                        <div class="box__content">
+                            <div class="box__content__top">
+
+
+                                <img :src="detail.photo" alt=""> <br>
+                                <p>{{ detail.firstname }} {{ detail.name }} <br>
+                                    Nationality: {{ detail.nationality }} <br>
+                                    Age: {{ detail.age }}
+                                </p>
+                            </div>
+
+                            <div class="box__content__bottom" v-if="detail.showMore">
+                                <div class="flag">
+                                    <h2>Current club</h2>
+                                    <img :src="detail.club" alt="">
+                                </div>
+
+                                <div class="clubs">
+                                    <h2>
+                                        Old clubs
+                                    </h2>
+                                    <div class="list">
+                                        <div v-for="club in detail.career" :key="club.team.id" class="club">
+                                            <img :src="club.team.logo" alt="">
+                                            <p>
+                                                <span class="green">{{ formatDate(club.start) }}</span> <br>
+                                                <strong class="red">{{ formatDate(club.end) || 'Present' }}</strong>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div> <br>
+
+
+                    <strong v-if="filteredDetailsList.length == 0" style="color: white; text-center: align">
+                        There is no result for this query
+                    </strong>
                 </div>
             </div>
         </main>
@@ -130,7 +175,7 @@
                 showMoreBtn: true,
                 showCloseBtn: false,
                 allCoachs: {},
-                idList: [30, 50, 10],
+                idList: [50, 435, ],
                 detailsList: [],
                 searchQuery: '',
                 showAll: true,
@@ -167,7 +212,7 @@
                             `https://v3.football.api-sports.io/coachs?id=${encodeURIComponent(list[i])}`, {
                                 method: 'GET',
                                 headers: {
-                                    "x-rapidapi-key": "71d95ba09f4094fa6f5f291f089cb27b",
+                                    "x-rapidapi-key": "aa2feb2e6dba6ca9a3e4e583ec2719db",
                                     "x-rapidapi-host": "v3.football.api-sports.io"
                                 },
                                 redirect: 'follow',
@@ -181,8 +226,16 @@
                         console.log(result);
                         let detail = {
                             id: list[i],
-                            name: result.response[0].firstname + ' ' + result.response[1]
+                            name: result.response[0].firstname + ' ' + result.response[0].lastname,
+                            age: result.response[0].age,
+                            nationality: result.response[0].nationality,
+                            photo: result.response[0].photo,
+                            team: result.response[0].team,
+                            career: result.response[0].career,
+                            club: result.response[0].team.logo,
+                            showMore: false
                         };
+
                         details.push(detail);
                     } catch (error) {
                         console.error('Error fetching data:', error);
@@ -193,15 +246,17 @@
                 this.detailsList = details;
             },
 
-            displayMore() {
+            displayMore(detail) {
                 this.showMore = true;
                 this.showMoreBtn = false;
                 this.showCloseBtn = true;
+                detail.showMore = true;
             },
-            closeMore() {
+            closeMore(detail) {
                 this.showMore = false;
                 this.showMoreBtn = true;
                 this.showCloseBtn = false;
+                detail.showMore = false;
             },
             getImgUrl(pic) {
                 return pic;

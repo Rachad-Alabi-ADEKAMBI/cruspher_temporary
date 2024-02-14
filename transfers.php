@@ -7,6 +7,9 @@
     <title>Cruspher - Transfers</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous">
+    </script>
 </head>
 
 <body>
@@ -43,48 +46,71 @@
                     <h2>
                         Team name : <span>Shakhtar Donetsk</span>
                     </h2>
-                    <div class="box" v-for="detail in apiResult.response" :key="detail.player.id">
+
+                    <div class="box" v-for='detail in apiResult.response' :key='detail.id'>
                         <div class="box__btn">
-                            <p @click="displayMore(detail)" v-if="showMoreBtn">
+                            <p @click="displayMore(detail)" v-if="!detail.showMore">
                                 +
                             </p>
-                            <p @click="closeMore()" v-if="showCloseBtn">
+                            <p @click="closeMore(detail)" v-if="detail.showMore">
                                 -
                             </p>
                         </div>
+
                         <div class="box__content">
                             <div class="box__content__top">
-                                <p>{{ detail.player.name }}</p>
-                                <img :src="detail.player.photo" alt="">
+                                <img :src="detail.photo" alt="">
+                                <p>Name: <span>{{ detail.player.name }}</span>
+                                </p>
                             </div>
-                            <div class="box__content__bottom" v-if="showMore">
-                                <div class="flag">
-                                    <h3>In</h3>
-                                    <div v-for="transfer in detail.transfers" :key="transfer.date" class="club">
-                                        <img :src="transfer.teams.in.logo" alt="">
-                                        <p>
-                                            {{ transfer.teams.in.name }} <br>
-                                            Date: {{ formatDate(transfer.date) }} <br>
-                                            Type: {{ transfer.type || 'N/A' }}
-                                        </p>
-                                    </div>
+
+                            <div class="box__content__bottom" v-if="detail.showMore">
+                                <div class="tab">
+                                    <table border="1" class='table' width=100>
+                                        <thead class="thead">
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Leaves</th>
+                                                <th>Goes to</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="tbody">
+                                            <tr v-for="transfer in detail.transfers" :key="transfer.date">
+                                                <td>{{ formatDate(transfer.date) }}</td>
+                                                <td>
+                                                    <div class="" v-for="transfer in detail.transfers"
+                                                        :key="transfer.date">
+                                                        <img :src="transfer.teams.in.logo" alt="">
+                                                        <p>
+                                                            Club: <strong>{{ transfer.teams.in.name }}</strong> <br>
+                                                            Date: <strong
+                                                                class="red">{{ formatDate(transfer.date) }}</strong>
+                                                            <br>
+                                                            Type: <strong>{{ transfer.type || 'N/A' }}</strong>
+                                                        </p>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="" v-for="transfer in detail.transfers"
+                                                        :key="transfer.date">
+                                                        <img :src="transfer.teams.out.logo" alt="">
+                                                        <p>
+                                                            Club: <strong>{{ transfer.teams.out.name }}</strong> <br>
+                                                            Date: <strong
+                                                                class="green">{{ formatDate(transfer.date) }}</strong>
+                                                            <br>
+                                                            Type: <strong>{{ transfer.type || 'N/A' }}</strong>
+                                                        </p>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
-                                <div class="arrow">
-                                    <img src="https://www.pngkit.com/png/full/497-4978152_arrow-right-black-background.png"
-                                        alt="">
-                                </div>
-                                <div class="flag">
-                                    <h3>Out</h3>
-                                    <div v-for="transfer in detail.transfers" :key="transfer.date" class="club">
-                                        <img :src="transfer.teams.out.logo" alt="">
-                                        <p>
-                                            {{ transfer.teams.out.name }} <br>
-                                            Date: {{ formatDate(transfer.date) }} <br>
-                                            Type: {{ transfer.type || 'N/A' }}
-                                        </p>
-                                    </div>
-                                </div>
+
                             </div>
+
+
                         </div>
                     </div>
                 </div>
@@ -110,66 +136,91 @@
                 },
                 showMore: false,
                 showMoreBtn: true,
-                showCloseBtn: false
+                showCloseBtn: false,
+                idList: [550],
+                detailsList: [],
+                allTransfers: [],
+                searchQuery: '',
+                showAll: true,
+                showResults: false
             };
         },
         mounted() {
             this.getGames();
         },
         methods: {
-            getGames() {
-                var currentDate = new Date();
-                var formattedDate = currentDate.toISOString().split('T')[0]; // Formats the date as 'yyyy-mm-dd'
+            async getGames() {
+                try {
+                    const currentDate = new Date();
+                    const formattedDate = currentDate.toISOString().split('T')[0];
 
-                var myHeaders = new Headers();
-                myHeaders.append("x-rapidapi-key", "71d95ba09f4094fa6f5f291f089cb27b");
-                myHeaders.append("x-rapidapi-host", "https://v3.football.api-sports.io/transfers?team=550");
+                    const myHeaders = new Headers();
+                    myHeaders.append("x-rapidapi-key", "aa2feb2e6dba6ca9a3e4e583ec2719db");
+                    myHeaders.append("x-rapidapi-host",
+                        "https://v3.football.api-sports.io/transfers?team=550");
 
-                var requestOptions = {
-                    method: 'GET',
-                    headers: myHeaders,
-                    redirect: 'follow',
-                };
+                    const requestOptions = {
+                        method: 'GET',
+                        headers: myHeaders,
+                        redirect: 'follow',
+                    };
 
-                fetch("https://v3.football.api-sports.io/transfers?team=550", requestOptions)
-                    .then(response => response.json())
-                    .then(result => {
-                        console.log(result);
-                        this.apiResult = result;
-                    })
-                    .catch(error => {
-                        console.log('error', error);
-                    });
+                    const response = await fetch("https://v3.football.api-sports.io/transfers?team=550",
+                        requestOptions);
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    console.log(result);
+                    this.apiResult = result;
+                } catch (error) {
+                    console.error('Error:', error);
+                }
             },
-            displayMore() {
+
+            displayMore(detail) {
                 this.showMore = true;
                 this.showMoreBtn = false;
                 this.showCloseBtn = true;
+                detail.showMore = true;
             },
-            closeMore() {
+            closeMore(detail) {
                 this.showMore = false;
                 this.showMoreBtn = true;
                 this.showCloseBtn = false;
+                detail.showMore = false;
             },
             getImgUrl(pic) {
                 return pic;
             },
-            formatDate(date) {
-                // Check if the date is not null or undefined
-                if (date) {
-                    // Replace this logic with your desired date formatting
-                    // For example, using a library like date-fns or moment.js
-                    // Here's a simple example:
-                    const formattedDate = new Date(date).toLocaleDateString();
+            formatDate(dateString) {
+                if (dateString) {
+                    const [year, month, day] = dateString.split('-');
+                    const formattedDate = `${day}-${month}-${year}`;
                     return formattedDate;
                 }
 
-                // If the date is null or undefined, return 'Present'
                 return 'Present';
+            },
+
+            searchQueryAction() {
+                this.showAll = false;
+                this.showResults = true;
+                console.log('Search query changed:', this.searchQuery);
+            },
+            closeResults() {
+                this.showAll = true;
+                this.showResults = false;
             }
 
         },
     }).mount('#app');
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
     </script>
 </body>
 

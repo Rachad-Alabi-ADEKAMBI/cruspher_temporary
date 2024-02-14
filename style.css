@@ -1,3 +1,13 @@
+.green {
+  color: green;
+  font-weight: bold;
+}
+
+.red {
+  color: red;
+  font-weight: bold;
+}
+
 html, body {
   margin: 0;
   padding: 0;
@@ -136,19 +146,26 @@ a:hover {
 .main__content .boxes .box__content__top {
   padding: 10px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: start;
   flex-wrap: wrap;
-  justify-content: space-between;
+  text-align: center;
 }
 .main__content .boxes .box__content__top p {
   color: white;
-  font-weight: 400;
+  font-weight: 500;
   text-align: left;
   line-height: 1.3em;
+  margin: auto;
+}
+.main__content .boxes .box__content__top p span {
+  color: #FFCA28;
+  font-weight: 800;
+  font-size: larger;
 }
 .main__content .boxes .box__content__top img {
   width: 90px;
+  margin: auto;
   height: auto;
   border-radius: 90px;
 }
@@ -159,6 +176,20 @@ a:hover {
   flex-wrap: wrap;
   padding: 10px;
   text-align: center;
+  /*
+  .tab{
+      width: 100%;
+
+      .table{
+          width: 100%;
+
+          th{
+              background-color: #F2F2F2;
+              color: black;
+          }
+      }
+  }
+  */
 }
 .main__content .boxes .box__content__bottom .flag {
   text-align: left;
@@ -194,10 +225,31 @@ a:hover {
   flex: 1;
 }
 .main__content .boxes .box__content__bottom .clubs .list .club img {
-  width: 90px;
-  border-radius: 60px;
+  width: 70px;
+  border-radius: 40px;
   height: auto;
-  margin: auto;
+  margin: 20px;
+}
+.main__content .boxes .box__content__bottom .tab {
+  width: 100%;
+}
+.main__content .boxes .box__content__bottom .tab .table {
+  width: 100%;
+}
+.main__content .boxes .box__content__bottom .tab .table .thead {
+  background-color: #f2f2f2;
+  color: black;
+  font-weight: bold;
+}
+.main__content .boxes .box__content__bottom .tab .table .thead tr {
+  height: 40px;
+}
+.main__content .boxes .box__content__bottom .tab .table .tbody tr {
+  height: 40px;
+}
+.main__content .boxes .box__content__bottom .tab .table .tbody tr td img {
+  width: 70px;
+  border-radius: 40px;
 }
 
 h1 {
